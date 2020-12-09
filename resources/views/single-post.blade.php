@@ -14,8 +14,9 @@
                         {!! $post->body !!}
                     </div>
                     <div class="post-tags wow fadeInUp">
-                        <a href="#!" class="post-tag">Design Studio</a>
-                        <a href="#!" class="post-tag">Creative Design</a>
+                        @foreach($post->tags as $tag)
+                            <a href="{{ route('tag', $tag->slug) }}" class="post-tag">{{ $tag->tag }}</a>
+                        @endforeach
                     </div>
                     <div class="post-navigation wow fadeInUp">
                         <button class="btn prev-post"> Prev Post</button>
@@ -52,32 +53,29 @@
                     <div class="sidebar-widget wow fadeInUp">
                         <h5 class="widget-title">Tags</h5>
                         <div class="widget-content">
-                            <a href="#!" class="post-tag">Design Studio</a>
-                            <a href="#!" class="post-tag">Creative Design</a>
-                            <a href="#!" class="post-tag">Marketing</a>
-                            <a href="#!" class="post-tag">Typography</a>
-                            <a href="#!" class="post-tag">Team</a>
-                            <a href="#!" class="post-tag">Project</a>
+                            @foreach($tags as $tag)
+                                <a href="{{ route('tag', $tag->slug) }}" class="post-tag">{{ $tag->tag }}</a>
+                            @endforeach
                         </div>
                     </div>
-{{--                    <div class="sidebar-widget wow fadeInUp">--}}
-{{--                        <h5 class="widget-title">Share</h5>--}}
-{{--                        <div class="widget-content">--}}
-{{--                            <nav class="social-links">--}}
-{{--                                <a href="#!">Fb</a>--}}
-{{--                                <a href="#!">Tw</a>--}}
-{{--                                <a href="#!">In</a>--}}
-{{--                                <a href="#!">Be</a>--}}
-{{--                            </nav>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
+                    {{--                    <div class="sidebar-widget wow fadeInUp">--}}
+                    {{--                        <h5 class="widget-title">Share</h5>--}}
+                    {{--                        <div class="widget-content">--}}
+                    {{--                            <nav class="social-links">--}}
+                    {{--                                <a href="#!">Fb</a>--}}
+                    {{--                                <a href="#!">Tw</a>--}}
+                    {{--                                <a href="#!">In</a>--}}
+                    {{--                                <a href="#!">Be</a>--}}
+                    {{--                            </nav>--}}
+                    {{--                        </div>--}}
+                    {{--                    </div>--}}
                     <div class="sidebar-widget wow fadeInUp">
                         <h5 class="widget-title">Categories</h5>
                         <div class="widget-content">
                             <ul class="category-list">
                                 @foreach($categories as $category)
                                     <li>
-                                        <a href="#">{{ $category->category }} <span class="badge badge-secondary">{{ $category->posts->count() }}</span></a>
+                                        <a href="{{ route('category', $category->slug) }}">{{ $category->category }} <span class="badge badge-secondary">{{ $category->posts->count() }}</span></a>
                                     </li>
                                 @endforeach
                             </ul>

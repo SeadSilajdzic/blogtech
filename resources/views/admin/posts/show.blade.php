@@ -28,6 +28,16 @@
     </div>
     <hr>
 
+    <div>
+        <strong> Tags: </strong>
+        @foreach($post->tags as $tag)
+           <a href="#" class="badge badge-secondary">{{ $tag->tag }}</a>
+        @endforeach
+    </div>
+
+    <hr>
+
+
     <h2 class="my-3">Comments</h2>
     {{--    Comments--}}
     <div class="media mb-4">

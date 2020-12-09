@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ManageTagsRequest;
+use App\Models\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class AdminTagsController extends Controller
 {
@@ -13,7 +16,10 @@ class AdminTagsController extends Controller
      */
     public function index()
     {
-        //
+        $tags = Tag::all();
+        return view('admin.tags.index', [
+            'tags' => $tags
+        ]);
     }
 
     /**
@@ -23,7 +29,7 @@ class AdminTagsController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.tags.index');
     }
 
     /**
@@ -32,9 +38,19 @@ class AdminTagsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ManageTagsRequest $request)
     {
-        //
+        $slug = Str::slug($request->input('slug'));
+        if (empty($slug)) {
+            $slug = Str::slug($request->input('tag'));
+        }
+
+        Tag::create([
+            'tag' => $request->tag,
+            'slug' => $slug
+        ]);
+
+        return redirect()->back();
     }
 
     /**
@@ -54,9 +70,11 @@ class AdminTagsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Tag $tag)
     {
-        //
+        return view('admin.tags.edit', [
+            'tag' => $tag
+        ]);
     }
 
     /**
@@ -66,9 +84,18 @@ class AdminTagsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ManageTagsRequest $request, Tag $tag)
     {
-        //
+        $slug = Str::slug($request->input('slug'));
+        if (empty($slug)) {
+            $slug = Str::slug($request->input('title'));
+        }
+
+        $tag->tag = $request->tag;
+        $tag->slug = $slug;
+        $tag->save();
+
+        return redirect()->route('tags.index');
     }
 
     /**
@@ -77,8 +104,9 @@ class AdminTagsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Tag $tag)
     {
-        //
+        $tag->delete();
+        return redirect()->back();
     }
 }

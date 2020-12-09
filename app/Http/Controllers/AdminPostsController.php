@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ManagePostsRequest;
 use App\Models\Category;
 use App\Models\Post;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use function GuzzleHttp\Promise\all;
@@ -47,6 +48,7 @@ class AdminPostsController extends Controller
     public function create()
     {
         $categories = Category::pluck('category', 'id');
+        $tags = Tag::all();
 
         if($categories->count() == 0)
         {
@@ -54,8 +56,15 @@ class AdminPostsController extends Controller
             return redirect()->route('category.index');
         }
 
+        if($tags->count() == 0)
+        {
+            session()->flash('no_tags', 'There are no tags yet! Make some first.');
+            return redirect()->route('tag.index');
+        }
+
         return view('admin.posts.create', [
-            'categories' => $categories
+            'categories' => $categories,
+            'tags' => $tags
         ]);
     }
 
@@ -76,7 +85,7 @@ class AdminPostsController extends Controller
             $slug = Str::slug($request->input('title'));
         }
 
-        Post::create([
+        $post = Post::create([
             'user_id' => auth()->user()->id,
             'category_id' => $request->category_id,
             'title' => $request->title,
@@ -85,6 +94,9 @@ class AdminPostsController extends Controller
             'image' => '/uploads/posts/images/' . $post_image_name,
             'published' => false,
         ]);
+
+        $post->tags()->attach($request->tags);
+
 
         $request->session()->flash('post_created', 'Post has been created');
         return redirect()->route('post.index');
@@ -112,9 +124,11 @@ class AdminPostsController extends Controller
     public function edit(Post $post)
     {
         $categories = Category::all();
+        $tags = Tag::all();
         return view('admin.posts.edit', [
             'post' => $post,
-            'categories' => $categories
+            'categories' => $categories,
+            'tags' => $tags
         ]);
     }
 
@@ -146,6 +160,8 @@ class AdminPostsController extends Controller
         $post->category_id = $request->category_id;
 
         $post->save();
+
+        $post->tags()->sync($request->tags);
 
         $request->session()->flash('post_updated', 'Post has been updated');
         return redirect()->route('post.index');

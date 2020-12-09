@@ -7,6 +7,7 @@ use \App\Http\Controllers\AdminPostsController;
 use \App\Http\Controllers\AdminProductsController;
 use \App\Http\Controllers\AdminProjectsController;
 use \App\Http\Controllers\AdminProductsCategoryController;
+use \App\Http\Controllers\AdminTagsController;
 use Illuminate\Support\Facades\View;
 
 /*
@@ -23,7 +24,9 @@ use Illuminate\Support\Facades\View;
 //Controllers for displaying parts of website to users
 Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/blog', [\App\Http\Controllers\HomeController::class, 'blog'])->name('blog');
+Route::get('/tag/{tag}', [\App\Http\Controllers\HomeController::class, 'tag'])->name('tag');
 Route::get('/portfolio', [\App\Http\Controllers\HomeController::class, 'portfolio'])->name('portfolio');
+Route::get('/category/{category}', [\App\Http\Controllers\HomeController::class, 'category'])->name('category');
 Route::get('/post/{post}', [\App\Http\Controllers\PostsController::class, 'show'])->name('show.single');
 
 //Needs to get finished
@@ -84,5 +87,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
     Route::get('/settings', [\App\Http\Controllers\AdminSettingsController::class, 'index'])->name('settings.index');
     Route::post('/settings/update', [\App\Http\Controllers\AdminSettingsController::class, 'update'])->name('settings.update');
 
-
+//  Tags controllers
+    Route::resource('/tag', AdminTagsController::class);
 });

@@ -25,11 +25,6 @@ class Post extends Model
         'published'
     ];
 
-    const VALIDATION_RULES = [
-        'title' => 'required|min:5',
-        'body' => 'required|min:50',
-    ];
-
     public function getRouteKeyName()
     {
         return 'slug';
@@ -43,5 +38,10 @@ class Post extends Model
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
     }
 }

@@ -2,10 +2,9 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Post;
 use Illuminate\Foundation\Http\FormRequest;
 
-class ManagePostsRequest extends FormRequest
+class ManageTagsRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,9 +24,7 @@ class ManagePostsRequest extends FormRequest
     public function rules()
     {
         return [
-            'tags' => 'required',
-            'title' => 'required|min:5',
-            'body' => 'required|min:50',
+            'tag' => 'required|min:3'
         ];
     }
 }

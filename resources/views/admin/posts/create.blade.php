@@ -30,6 +30,16 @@
         </div>
 
         <div class="form-group">
+            <label for="tags">Select tags</label>
+            @foreach($tags as $tag)
+                <div class="form-check">
+                    <input type="checkbox" name="tags[]" class="form-check-input" id="tags" value="{{ $tag->id }}">
+                    <label for="tags" class="form-check-label">{{ $tag->tag }}</label>
+                </div>
+            @endforeach
+        </div>
+
+        <div class="form-group">
             <label for="body">Content</label>
             <textarea name="body" id="body" cols="30" rows="10" class="form-control mytinytext">{{ old('body') }}</textarea>
         </div>

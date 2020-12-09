@@ -99,6 +99,20 @@
             </div>
         </li>
 
+        <!-- Nav Item - Tags Collapse Menu -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTags" aria-expanded="true" aria-controls="collapseTags">
+                <i class="fas fa-fw fa-pencil-ruler"></i>
+                <span>Tags</span>
+            </a>
+            <div id="collapseTags" class="collapse" aria-labelledby="headingTags" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Manage tags:</h6>
+                    <a class="collapse-item" href="{{ route('tag.index') }}">Tags</a>
+                </div>
+            </div>
+        </li>
+
         <!-- Divider -->
         <hr class="sidebar-divider">
 

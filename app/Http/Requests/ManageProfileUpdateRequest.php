@@ -27,12 +27,7 @@ class ManageProfileUpdateRequest extends FormRequest
             'name' => 'required|min:3|max:50',
             'username' => 'required|min:3|max:25',
             'email' => 'required|email',
-            'bio' => 'max:500',
-            'facebook' => 'url',
-            'instagram' => 'url',
-            'linkedin' => 'url',
-            'github' => 'url',
-            'youtube' => 'url',
+            'bio' => 'max:500'
         ];
     }
 }

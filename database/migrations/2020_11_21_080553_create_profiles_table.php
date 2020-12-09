@@ -21,11 +21,11 @@ class CreateProfilesTable extends Migration
             $table->string('address')->nullable();
             $table->string('primary_phone')->nullable();
             $table->string('secondary_phone')->nullable();
-            $table->string('facebook')->default('www.facebook.com');
-            $table->string('instagram')->default('www.instagram.com');
-            $table->string('linkedin')->default('www.linkedin.com');
-            $table->string('github')->default('www.github.com');
-            $table->string('youtube')->default('www.youtube.com');
+            $table->string('facebook')->nullable();
+            $table->string('instagram')->nullable();
+            $table->string('linkedin')->nullable();
+            $table->string('github')->nullable();
+            $table->string('youtube')->nullable();
             $table->timestamps();
         });
     }

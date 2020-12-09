@@ -20,23 +20,23 @@ class AdminPostsController extends Controller
     {
         $all_posts = Post::all();
         $categories = Category::all();
-        if($all_posts->count() == '0')
+
+        if($all_posts->count() == 0)
         {
             session()->flash('no_posts', 'There are no posts yet! Make some first.');
             return redirect()->route('post.create');
         }
-        else if($categories->count() == '0')
+        else if($categories->count() == 0)
         {
             session()->flash('no_categories', 'There are no categories yet! Make some first.');
             return redirect()->route('category.index');
         }
-        else
-        {
-            $posts = Post::orderByDesc('created_at')->simplePaginate(10);
-            return view('admin.posts.index', [
-                'posts' => $posts
-            ]);
-        }
+
+        $posts = Post::orderByDesc('created_at')->simplePaginate(10);
+        return view('admin.posts.index', [
+            'posts' => $posts
+        ]);
+
     }
 
     /**
@@ -47,6 +47,13 @@ class AdminPostsController extends Controller
     public function create()
     {
         $categories = Category::pluck('category', 'id');
+
+        if($categories->count() == 0)
+        {
+            session()->flash('no_categories', 'There are no categories yet! Make some first.');
+            return redirect()->route('category.index');
+        }
+
         return view('admin.posts.create', [
             'categories' => $categories
         ]);

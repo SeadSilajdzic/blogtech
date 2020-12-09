@@ -11,6 +11,11 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
+    public function getImageAttribute($image)
+    {
+        return asset($image);
+    }
+
     /**
      * The attributes that are mass assignable.
      *

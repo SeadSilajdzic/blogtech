@@ -1,10 +1,13 @@
 <?php
 
 use App\Http\Controllers\AdminUsersController;
+use App\Models\Setting;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\AdminPostsController;
 use \App\Http\Controllers\AdminProductsController;
+use \App\Http\Controllers\AdminProjectsController;
 use \App\Http\Controllers\AdminProductsCategoryController;
+use Illuminate\Support\Facades\View;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +22,8 @@ use \App\Http\Controllers\AdminProductsCategoryController;
 
 //Controllers for displaying parts of website to users
 Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/blog', [\App\Http\Controllers\HomeController::class, 'blog'])->name('blog');
+Route::get('/portfolio', [\App\Http\Controllers\HomeController::class, 'portfolio'])->name('portfolio');
 Route::get('/post/{post}', [\App\Http\Controllers\PostsController::class, 'show'])->name('show.single');
 
 //Needs to get finished
@@ -26,11 +31,15 @@ Route::get('/shop', [\App\Http\Controllers\ShopController::class, 'index'])->nam
 
 //Controllers for users profile management
 Route::get('/profile/user/{id}', [\App\Http\Controllers\ProfileController::class, 'show'])->name('user.show.profile');
+Route::get('/profile/user/{id}/edit', [\App\Http\Controllers\ProfileController::class, 'edit'])->name('user.edit.profile');
 Route::put('/profile/update/user/{id}', [\App\Http\Controllers\ProfileController::class, 'update'])->name('user.profile.update');
 
 //Controllers for authentication
 Auth::routes();
 Route::get('/logout', [\App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
+
+
+
 
 //Grouped controllers for admin and admin panel
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
@@ -66,4 +75,14 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
 
 //    Users controllers
     Route::resource('/user', AdminUsersController::class);
+
+//    Projects controllers
+    Route::resource('/projects', AdminProjectsController::class);
+
+
+//    Site settings controllers
+    Route::get('/settings', [\App\Http\Controllers\AdminSettingsController::class, 'index'])->name('settings.index');
+    Route::post('/settings/update', [\App\Http\Controllers\AdminSettingsController::class, 'update'])->name('settings.update');
+
+
 });

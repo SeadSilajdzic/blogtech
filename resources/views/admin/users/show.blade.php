@@ -58,7 +58,7 @@
 
     </div>
 
-    <p class="my-3"><strong>{{ $user->name }}'s biography: </strong>{{ $user->profile->bio }}</p>
+    <p class="my-3"><strong>{{ $user->name }}'s biography: </strong>{!! $user->profile->bio !!}</p>
 
     <div class="social">
         <a href="{{ $user->profile->facebook }}" target="_blank">Facebook</a>

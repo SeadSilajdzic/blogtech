@@ -18,8 +18,7 @@
             <input type="text"
                    name="slug"
                    class="form-control"
-                   placeholder="Type your custom slug for this category or leave empty to generate automatically"
-                   value="{{ $category->slug }}">
+                   placeholder="Type your custom slug for this category or leave empty to generate automatically">
         </div>
 
         <div class="form-group">

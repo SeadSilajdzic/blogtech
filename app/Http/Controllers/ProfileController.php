@@ -18,6 +18,14 @@ class ProfileController extends Controller
         ]);
     }
 
+    public function edit($id)
+    {
+        $user = $user = User::where('id', $id)->firstOrFail();
+        return view('profile-edit', [
+            'user' => $user
+        ]);
+    }
+
     public function update(ManageProfileUpdateRequest $request, $id)
     {
         $user = Auth::user();

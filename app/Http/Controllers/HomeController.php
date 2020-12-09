@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Setting;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +24,17 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('index');
+        $settings = Setting::firstOrFail();
+        return view('index', compact('settings'));
+    }
+
+    public function blog()
+    {
+        return view('blog');
+    }
+
+    public function portfolio()
+    {
+        return view('portfolio');
     }
 }

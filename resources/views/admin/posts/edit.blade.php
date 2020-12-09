@@ -14,7 +14,7 @@
 
         <div class="form-group">
             <label for="slug">Slug</label>
-            <input type="text" name="slug" class="form-control" placeholder="Add custom slug for this post or leave empty (will be generated automatically)" value="{{ $post->slug }}">
+            <input type="text" name="slug" class="form-control" placeholder="Add custom slug for this post or leave empty (will be generated automatically)">
         </div>
 
         <div class="form-group">
@@ -32,7 +32,7 @@
 
         <div class="form-group">
             <label for="body">Content</label>
-            <textarea name="body" id="body" cols="30" rows="10" class="form-control">{{ $post->body }}</textarea>
+            <textarea name="body" id="body" cols="30" rows="10" class="form-control mytinytext">{{ $post->body }}</textarea>
         </div>
 
         <div class="custom-file mb-4">

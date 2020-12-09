@@ -10903,3 +10903,26 @@ a.text-dark:focus {
   }
 }
 
+.search-input {
+  position: relative;
+}
+
+.search-box {
+  position: absolute;
+  z-index: 10;
+  list-style: none;
+  background-color: white;
+  width: 100%;
+  border-radius: 0 0 30px 30px;
+  box-shadow: 0 15px 20px #000;
+}
+
+.search-box a {
+  text-decoration: none;
+  color: #777;
+}
+
+ul {
+  list-style: none;
+}
+

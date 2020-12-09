@@ -31,7 +31,7 @@
 
         <div class="form-group">
             <label for="body">Content</label>
-            <textarea name="body" id="body" cols="30" rows="10" class="form-control">{{ old('body') }}</textarea>
+            <textarea name="body" id="body" cols="30" rows="10" class="form-control mytinytext">{{ old('body') }}</textarea>
         </div>
 
         <div class="custom-file mb-4">

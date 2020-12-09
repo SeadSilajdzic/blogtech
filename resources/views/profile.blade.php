@@ -1,97 +1,162 @@
 @extends('layouts.home')
 
-@section('full-page')
-    <h2>User profile: <strong>{{ $user->name }}</strong></h2>
+@section('content')
+    <div class="container emp-profile">
+        <form method="post">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="profile-img">
+                        <img style="width: 50%;" src="{{ $user->profile->image }}" alt="{{ $user->name }} image " class="pb-4">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="profile-head">
+                        <h5>
+                            {{ $user->name }}
+                        </h5>
+                        <h6>
+{{--                            profession--}}
+                        </h6>
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            @if(!empty($user->profile->bio))
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Bio</a>
+                                </li>
+                            @endif
+                            <li class="nav-item">
+                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Learn more</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <a href="{{ route('user.edit.profile', $user->id) }}" class="btn btn-primary" style="color: white;">Edit profile</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="profile-work">
+                        <div>
+                            <p>WORK LINK</p>
+{{--                            other profiles--}}
+                        </div>
+                        <div class="py-4">
+                            <p>SKILLS</p>
+{{--                            skills--}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="tab-content profile-tab" id="myTabContent">
+                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                            <p>
+                                {!! $user->profile->bio !!}
+                            </p>
+                        </div>
 
-    @include('includes._errors')
-    @include('includes._sessions')
 
-    <form action="{{ route('user.profile.update', $user->id) }}" method="post" enctype="multipart/form-data">
-        @csrf
-        @method('put')
+                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Name</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>{{ $user->name }}</p>
+                                </div>
+                            </div>
 
-        <div class="custom-file my-4">
-            <input type="file" class="custom-file-input" id="image" name="image">
-            <label class="custom-file-label" for="image">Choose file</label>
-        </div>
+                            @if($user->username)
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Username</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>{{ $user->username }}</p>
+                                    </div>
+                                </div>
+                            @endif
 
-        <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" name="name" class="form-control" value="{{ $user->name }}">
-        </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Email</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>{{ $user->email ? $user->email : 'No email' }}</p>
+                                </div>
+                            </div>
+                            @if($user->profile->primary_phone || $user->profile->secondary_phone)
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Phone</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>{{ $user->phone }}</p>
+                                    </div>
+                                </div>
+                            @endif
 
-        <div class="form-group">
-            <label for="username">Username</label>
-            <input type="text" name="username" class="form-control" value="{{ $user->username }}">
-        </div>
+                            @if($user->profile->profession)
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Profession</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>{{ $user->profession }}</p>
+                                    </div>
+                                </div>
+                            @endif
 
-        <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" name="email" class="form-control" value="{{ $user->email }}">
-        </div>
 
-        <hr class="divider">
-
-        <div class="form-group">
-            <label for="bio">About Me</label>
-            <textarea class="form-control" name="bio" id="bio" cols="30" rows="10">{{ $user->profile->bio }}</textarea>
-        </div>
-
-        <div class="form-group">
-            <label for="address">Address</label>
-            <input type="text" name="address" class="form-control" value="{{ $user->profile->address }}">
-        </div>
-
-        <div class="form-group">
-            <label for="primary_phone">Primary phone number</label>
-            <input type="text" name="primary_phone" class="form-control" value="{{ $user->profile->primary_phone }}">
-        </div>
-
-        <div class="form-group">
-            <label for="secondary_phone">Secondary phone number</label>
-            <input type="text" name="secondary_phone" class="form-control" value="{{ $user->profile->secondary_phone }}">
-        </div>
-
-        <div class="form-group">
-            <label for="facebook">Facebook</label>
-            <input type="text" name="facebook" class="form-control" value="{{ $user->profile->facebook }}">
-        </div>
-
-        <div class="form-group">
-            <label for="instagram">Instagram</label>
-            <input type="text" name="instagram" class="form-control" value="{{ $user->profile->instagram }}">
-        </div>
-
-        <div class="form-group">
-            <label for="linkedin">LinkedIn</label>
-            <input type="text" name="linkedin" class="form-control" value="{{ $user->profile->linkedin }}">
-        </div>
-
-        <div class="form-group">
-            <label for="github">GitHub</label>
-            <input type="text" name="github" class="form-control" value="{{ $user->profile->github }}">
-        </div>
-        <div class="form-group">
-            <label for="youtube">YouTube</label>
-            <input type="text" name="youtube" class="form-control" value="{{ $user->profile->youtube }}">
-        </div>
-
-        <hr class="divider">
-
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" name="password" class="form-control">
-        </div>
-
-        <div class="form-group">
-            <label for="password_confirmation">Confirm password</label>
-            <input type="password" name="password_confirmation" class="form-control">
-        </div>
-
-        <div class="form-group">
-            <button type="submit" name="btn_update_user_profile" class="btn btn-primary btn-block">Update profile</button>
-        </div>
-    </form>
-
-    @include('includes._errors')
+{{--                            <div class="row">--}}
+{{--                                <div class="col-md-6">--}}
+{{--                                    <label>Experience</label>--}}
+{{--                                </div>--}}
+{{--                                <div class="col-md-6">--}}
+{{--                                    <p>Expert</p>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="row">--}}
+{{--                                <div class="col-md-6">--}}
+{{--                                    <label>Hourly Rate</label>--}}
+{{--                                </div>--}}
+{{--                                <div class="col-md-6">--}}
+{{--                                    <p>10$/hr</p>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="row">--}}
+{{--                                <div class="col-md-6">--}}
+{{--                                    <label>Total Projects</label>--}}
+{{--                                </div>--}}
+{{--                                <div class="col-md-6">--}}
+{{--                                    <p>230</p>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="row">--}}
+{{--                                <div class="col-md-6">--}}
+{{--                                    <label>English Level</label>--}}
+{{--                                </div>--}}
+{{--                                <div class="col-md-6">--}}
+{{--                                    <p>Expert</p>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="row">--}}
+{{--                                <div class="col-md-6">--}}
+{{--                                    <label>Availability</label>--}}
+{{--                                </div>--}}
+{{--                                <div class="col-md-6">--}}
+{{--                                    <p>6 months</p>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="row">--}}
+{{--                                <div class="col-md-12">--}}
+{{--                                    <label>Your Bio</label><br/>--}}
+{{--                                    <p>Your detail description</p>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
 @endsection

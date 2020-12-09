@@ -41,6 +41,7 @@ class AdminUsersController extends Controller
      */
     public function store(ManageUsersRequest $request)
     {
+//        Try Catch with exception
         $user_image = $request->image;
         $user_image_name = time() . $user_image->getClientOriginalName();
         $user_image->move('uploads/users/images', $user_image_name);

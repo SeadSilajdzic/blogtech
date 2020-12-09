@@ -48,6 +48,12 @@
     </div>
 @endif
 
+@if(session()->has('site_settings_updated'))
+    <div class="alert alert-info" role="alert">
+        <p><strong>Updated</strong> {{ session()->get('site_settings_updated') }}</p>
+    </div>
+@endif
+
 {{--WARNING--}}
 @if(session()->has('no_posts'))
     <div class="alert alert-warning" role="alert">

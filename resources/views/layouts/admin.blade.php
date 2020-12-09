@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>{{ config('app.name') }}</title>
+    <title>{{ config('app.name', 'Digy Studio') }}</title>
 
     <!-- Custom fonts for this template-->
     <link href="{{ asset('admin-template/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
@@ -17,7 +17,7 @@
 
     <!-- Custom styles for this template-->
     <link href="{{ asset('admin-template/css/sb-admin-2.min.css') }}" rel="stylesheet">
-
+    @livewireStyles
 </head>
 
 <body id="page-top">
@@ -29,11 +29,11 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
         <!-- Sidebar - Brand -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('admin.index') }}">
             <div class="sidebar-brand-icon rotate-n-15">
                 <i class="fas fa-wind"></i>
             </div>
-            <div class="sidebar-brand-text mx-3">{{ config('app.name') }}</div>
+            <div class="sidebar-brand-text mx-3">{{ config('app.name', 'Digy Studio') }}</div>
         </a>
 
         <!-- Divider -->
@@ -227,6 +227,28 @@
         </li>
 
         <!-- Divider -->
+        <hr class="sidebar-divider">
+
+        <!-- Heading -->
+        <div class="sidebar-heading">
+            Site settings
+        </div>
+
+        <!-- Nav Item - Clients Collapse Menu -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSettings" aria-expanded="true" aria-controls="collapseSettings">
+                <i class="fas fa-fw fa-cog"></i>
+                <span>Settings</span>
+            </a>
+            <div id="collapseSettings" class="collapse" aria-labelledby="headingSettings" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Manage site:</h6>
+                    <a class="collapse-item" href="{{ route('settings.index') }}">Overall settings</a>
+                </div>
+            </div>
+        </li>
+
+        <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">
 
         <!-- Sidebar Toggler (Sidebar) -->
@@ -252,16 +274,7 @@
                 </button>
 
                 <!-- Topbar Search -->
-                <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                    <div class="input-group">
-                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                        <div class="input-group-append">
-                            <button class="btn btn-primary" type="button">
-                                <i class="fas fa-search fa-sm"></i>
-                            </button>
-                        </div>
-                    </div>
-                </form>
+                @livewire('admin-search-form')
 
                 <!-- Topbar Navbar -->
                 <ul class="navbar-nav ml-auto">
@@ -434,6 +447,10 @@
 </a>
 
 
+{{--TinyMCE--}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/5.6.1/tinymce.min.js" integrity="sha512-RAKGi5Lz3BrsIKXW8sSbTM2sgNbf5m3n7zApdXDTL1IH0OvG1Xe1q2yI2R2gTDqsd2PLuQIIiPnDJeOSLikJTA==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/5.6.1/jquery.tinymce.min.js" integrity="sha512-0+DXihLxnogmlHWg1hVntlqMiGthwA02YWrzGnOi+yNyoD3IA4yDBzxvm+EwTCZeUM4zNy3deF9CbQqQBQx2Yg==" crossorigin="anonymous"></script>
+
 <!-- Bootstrap core JavaScript-->
 <script src="{{ asset('admin-template/vendor/jquery/jquery.min.js') }}"></script>
 <script src="{{ asset('admin-template/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
@@ -451,6 +468,13 @@
 <script src="{{ asset('admin-template/js/demo/chart-area-demo.js') }}"></script>
 <script src="{{ asset('admin-template/js/demo/chart-pie-demo.js') }}"></script>
 
+<script>
+    tinymce.init({
+        selector: '.mytinytext',
+    });
+</script>
+
+@livewireScripts
 </body>
 
 </html>
